@@ -1,84 +1,85 @@
 // Sign-Up functionality (for signup.html)
 if (document.getElementById('signupForm')) {
-    document.getElementById('signupForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-  
-      const username = document.getElementById('signupUsername').value.trim();  // Trim any extra spaces
-      const password = document.getElementById('signupPassword').value.trim();
-      const confirmPassword = document.getElementById('signupConfirmPassword').value.trim();
-  
-      // Check if passwords match
-      if (password !== confirmPassword) {
-        document.getElementById('signup-error-message').textContent = 'Passwords do not match!';
-        return;
-      }
-  
-      // Retrieve existing users from localStorage or initialize an empty array
-      const users = JSON.parse(localStorage.getItem('users')) || [];
-  
-      // Check if the username already exists (case insensitive)
-      if (users.find(user => user.username.toLowerCase() === username.toLowerCase())) {
-        document.getElementById('signup-error-message').textContent = 'Username already exists!';
-        return;
-      }
-  
-      // Save new user to localStorage
-      users.push({ username, password });
-      localStorage.setItem('users', JSON.stringify(users));
-  
-      // Log the saved users (for debugging purposes)
-      console.log('Users saved to localStorage:', users);
-  
-      // Redirect to login page
-      alert('Sign-up successful! Please log in.');
-      window.location.href = 'login.html';
-    });
-  }
-  
-  // Login functionality (for login.html)
-  if (document.getElementById('loginForm')) {
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-  
-      const username = document.getElementById('loginUsername').value.trim();  // Trim any extra spaces
-      const password = document.getElementById('loginPassword').value.trim();
-  
-      // Retrieve users from localStorage
-      const users = JSON.parse(localStorage.getItem('users')) || [];
-  
-      // Find the user by username and password (case insensitive)
-      const user = users.find(u => u.username.toLowerCase() === username.toLowerCase() && u.password === password);
-  
-      // Check if user exists
-      if (user) {
-        // Save user session data (optional, for persistent session)
-        sessionStorage.setItem('loggedInUser', JSON.stringify(user));
-  
-        // Redirect to homepage after successful login
-        window.location.href = 'index.html';
-      } else {
-        // Show error message if login fails
-        document.getElementById('error-message').textContent = 'Invalid username or password';
-      }
-    });
-  }
-  
-  // Check if the user is logged in before showing the homepage (index.html)
-  if (document.body.id === 'homePage') {
-    window.addEventListener('DOMContentLoaded', function() {
-      const loggedInUser = sessionStorage.getItem('loggedInUser');
-  
-      if (!loggedInUser) {
-        // If no logged-in user found, redirect to login page
-        window.location.href = 'login.html';
-      } else {
-        // Optionally, you can display the user's username on the page
-        const user = JSON.parse(loggedInUser);
-        console.log(`Welcome, ${user.username}!`);
-      }
-    });
-  }
-  // Product data for each category
+  document.getElementById('signupForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById('signupUsername').value.trim();  // Trim any extra spaces
+    const password = document.getElementById('signupPassword').value.trim();
+    const confirmPassword = document.getElementById('signupConfirmPassword').value.trim();
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      document.getElementById('signup-error-message').textContent = 'Passwords do not match!';
+      return;
+    }
+
+    // Retrieve existing users from localStorage or initialize an empty array
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+
+    // Check if the username already exists (case insensitive)
+    if (users.find(user => user.username.toLowerCase() === username.toLowerCase())) {
+      document.getElementById('signup-error-message').textContent = 'Username already exists!';
+      return;
+    }
+
+    // Save new user to localStorage
+    users.push({ username, password });
+    localStorage.setItem('users', JSON.stringify(users));
+
+    // Log the saved users (for debugging purposes)
+    console.log('Users saved to localStorage:', users);
+
+    // Redirect to login page
+    alert('Sign-up successful! Please log in.');
+    window.location.href = 'login.html';  // Ensure the path is correct on GitHub
+  });
+}
+
+// Login functionality (for login.html)
+if (document.getElementById('loginForm')) {
+  document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById('loginUsername').value.trim();  // Trim any extra spaces
+    const password = document.getElementById('loginPassword').value.trim();
+
+    // Retrieve users from localStorage
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+
+    // Find the user by username and password (case insensitive)
+    const user = users.find(u => u.username.toLowerCase() === username.toLowerCase() && u.password === password);
+
+    // Check if user exists
+    if (user) {
+      // Save user session data (optional, for persistent session)
+      sessionStorage.setItem('loggedInUser', JSON.stringify(user));
+
+      // Redirect to homepage after successful login
+      window.location.href = 'index.html';  // Ensure this path is correct
+    } else {
+      // Show error message if login fails
+      document.getElementById('error-message').textContent = 'Invalid username or password';
+    }
+  });
+}
+
+// Check if the user is logged in before showing the homepage (index.html)
+if (document.body.id === 'homePage') {
+  window.addEventListener('DOMContentLoaded', function() {
+    const loggedInUser = sessionStorage.getItem('loggedInUser');
+
+    if (!loggedInUser) {
+      // If no logged-in user found, redirect to login page
+      window.location.href = 'login.html';  // Ensure the path is correct
+    } else {
+      // Optionally, you can display the user's username on the page
+      const user = JSON.parse(loggedInUser);
+      console.log(`Welcome, ${user.username}!`);
+    }
+  });
+}
+
+// Product data for each category
 const products = {
   lipsticks: [
     {
@@ -151,48 +152,47 @@ const products = {
   ]
 };
 
-  
-  // Function to display products based on category
-  function displayProducts(category) {
-    const productContainer = document.getElementById('product-display');
-    productContainer.innerHTML = "";  // Clear the current display
-  
-    // Get the products for the selected category
-    const selectedProducts = products[category];
-  
-    if (selectedProducts) {
-      selectedProducts.forEach(product => {
-        // Create a div for each product
-        const productDiv = document.createElement('div');
-        productDiv.classList.add('product');
-  
-        // Insert the product's name, price, and image into the div
-        productDiv.innerHTML = `
-          <img src="${product.image}" alt="${product.name}" class="product-image">
-          <h3 class="product-name">${product.name}</h3>
-          <p class="product-price">${product.price}</p>
-        `;
-  
-      
-        productContainer.appendChild(productDiv);
-      });
-    } else {
-      productContainer.innerHTML = "<p>No products available in this category.</p>";
-    }
-  }
-  
-  
-  const categoryButtons = document.querySelectorAll('.category-btn');
-  categoryButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const category = this.getAttribute('data-category');
-      displayProducts(category);
+// Function to display products based on category
+function displayProducts(category) {
+  const productContainer = document.getElementById('product-display');
+  productContainer.innerHTML = "";  // Clear the current display
+
+  // Get the products for the selected category
+  const selectedProducts = products[category];
+
+  if (selectedProducts) {
+    selectedProducts.forEach(product => {
+      // Create a div for each product
+      const productDiv = document.createElement('div');
+      productDiv.classList.add('product');
+
+      // Insert the product's name, price, and image into the div
+      productDiv.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" class="product-image">
+        <h3 class="product-name">${product.name}</h3>
+        <p class="product-price">${product.price}</p>
+      `;
+
+      // Append the product div to the product container
+      productContainer.appendChild(productDiv);
     });
+  } else {
+    productContainer.innerHTML = "<p>No products available in this category.</p>";
+  }
+}
+
+// Event listeners for category buttons
+const categoryButtons = document.querySelectorAll('.category-btn');
+categoryButtons.forEach(button => {
+  button.addEventListener('click', function() {
+    const category = this.getAttribute('data-category');
+    displayProducts(category);
   });
-  
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    displayProducts('lipsticks');
-  });
-  
+});
+
+// Display a default category (e.g., luxury lipsticks) when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+  displayProducts('lipsticks');
+});
+
   
