@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Makeup Products</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navigation / Header (optional) -->
+  <header>
+    <h1>Makeup Store</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main content area -->
+  <div class="product-container">
+    <!-- Sidebar with categories -->
+    <div class="category-list">
+      <h2>Categories</h2>
+      <ul>
+        <li><button class="category-btn" data-category="lipsticks">Luxury Lipsticks</button></li>
+        <li><button class="category-btn" data-category="eyeshadows">Eyeshadow</button></li>
+        <li><button class="category-btn" data-category="mascaras">Mascaras</button></li>
+        <!-- Add more categories as needed -->
+      </ul>
+    </div>
+
+    <!-- Product display area -->
+    <div id="product-display" class="product-display">
+      <!-- Products will be dynamically inserted here -->
+    </div>
+  </div>
+
+  <!-- Script for product functionality -->
+  <script src="app.js"></script>
+</body>
+</html>
